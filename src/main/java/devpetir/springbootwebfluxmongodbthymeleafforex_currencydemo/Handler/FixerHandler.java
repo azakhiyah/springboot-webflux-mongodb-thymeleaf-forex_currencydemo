@@ -8,7 +8,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import org.springframework.http.MediaType;
+
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
@@ -60,7 +60,6 @@ public class FixerHandler {
                 int totalItems = rates.size();
                 int totalPages = (int) Math.ceil((double) totalItems / size);
                 int fromIndex = (page - 1) * size;
-                int toIndex = Math.min(fromIndex + size, totalItems);
 
                 Map<String, Double> pagedRates = rates.entrySet().stream()
                         .skip(fromIndex)
