@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Exchange Rates</title>
+    <style>
+        table {
+            width: 50%;
+            border-collapse: collapse;
+            margin: auto; /* Center the table */
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        .pagination {
+            margin: 40px 0; /* Increase the top and bottom margin */
+            display: flex;
+            justify-content: center;
+        }
+        .pagination a {
+            margin: 0 5px;
+            padding: 8px 16px;
+            text-decoration: none;
+            border: 1px solid #ddd;
+            color: #007bff;
+        }
+        .pagination a.active {
+            background-color: #007bff;
+            color: white;
+            border: 1px solid #007bff;
+        }
+        .pagination a:hover:not(.active) {
+            background-color: #ddd;
+        }
+        .pagination span.disabled {
+            margin: 0 5px;
+            padding: 8px 16px;
+            border: 1px solid #ddd;
+            color: #ddd;
+        }
+    </style>
+</head>
+<body>
+    <h1 style="text-align: center;">Exchange Rates</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Currency Code</th>
+                <th>Rate</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="rate : ${rates}">
+                <td th:text="${rate.key}"></td>
+                <td th:text="${rate.value}"></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="pagination">
+        <a th:if="${currentPage > 1}" th:href="@{'/timeseries/' + ${startDate} + '/' + ${endDate} + '?page=' + (${currentPage - 1})}">&laquo;</a>
+        <span th:if="${currentPage == 1}" class="disabled">&laquo;</span>
+
+        <a th:each="i : ${#numbers.sequence(1, totalPages)}"
+           th:href="@{'/timeseries/' + ${startDate} + '/' + ${endDate} + '?page=' + ${i}}"
+           th:classappend="${currentPage == i} ? ' active' : ''"
+           th:text="${i}"></a>
+
+        <a th:if="${currentPage < totalPages}" th:href="@{'/timeseries/' + ${startDate} + '/' + ${endDate} + '?page=' + (${currentPage + 1})}">&raquo;</a>
+        <span th:if="${currentPage == totalPages}" class="disabled">&raquo;</span>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,42 @@
+ .funny {
+    font-style: italic;
+    color: green;
+ }
+ table {
+    width: 50%;
+    border-collapse: collapse;
+    margin: auto; /* Center the table */
+}
+table, th, td {
+    border: 1px solid black;
+}
+th, td {
+    padding: 10px;
+    text-align: left;
+}
+.pagination {
+    margin: 40px 0; /* Increase the top and bottom margin */
+    display: flex;
+    justify-content: center;
+}
+.pagination a {
+    margin: 0 5px;
+    padding: 8px 16px;
+    text-decoration: none;
+    border: 1px solid #ddd;
+    color: #007bff;
+}
+.pagination a.active {
+    background-color: #007bff;
+    color: white;
+    border: 1px solid #007bff;
+}
+.pagination a:hover:not(.active) {
+    background-color: #ddd;
+}
+.pagination span.disabled {
+    margin: 0 5px;
+    padding: 8px 16px;
+    border: 1px solid #ddd;
+    color: #ddd;
+}
