@@ -8,7 +8,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-
+//import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
@@ -35,6 +35,7 @@ public class FixerHandler {
         /* if startDate and endDate as parameter in url */
         String startDate = request.pathVariable("startDate");
         String endDate = request.pathVariable("endDate");
+
         int page = Integer.parseInt(request.queryParam("page").orElse("1"));
         int size = 10; // Number of items per page
 
@@ -45,6 +46,7 @@ public class FixerHandler {
         //         .contentType(MediaType.APPLICATION_JSON)
         //         .body(rateData,String.class);
 
+        
         return rateData.flatMap(data -> {
             try {
                 JsonNode jsonNode = objectMapper.readTree(data);
@@ -57,10 +59,10 @@ public class FixerHandler {
                     rates.put(field.getKey(), field.getValue().asDouble());
                 }
 
-                /* Without pagination all rates will display */
+                // Without pagination all rates will display
                 //return ServerResponse.ok().render("rates", Map.of("rates", rates));
 
-                /* Implement pagination */
+                // Implement pagination 
                 int totalItems = rates.size();
                 int totalPages = (int) Math.ceil((double) totalItems / size);
                 int fromIndex = (page - 1) * size;
@@ -79,6 +81,7 @@ public class FixerHandler {
                 return ServerResponse.status(500).bodyValue("Error processing rates data");
             }
         });
+        
         
     } 
 
