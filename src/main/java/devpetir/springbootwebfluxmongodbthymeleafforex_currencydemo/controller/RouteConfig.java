@@ -18,9 +18,10 @@ public class RouteConfig {
     public RouterFunction<ServerResponse> route() {
         return RouterFunctions.route()
             .GET("/hello", request -> ServerResponse.ok().bodyValue("Hello, from WebFlux 2"))
-            // if startDate and endDate in hardCode
+            /* if startDate and endDate in hardCode */
             //.GET("/timeseries",fixerHandler::getCurrentRate)
-            // if startDate and endDate as parameter in url
+
+            /* if startDate and endDate as parameter in url */
             .GET("/timeseries/{startDate}/{endDate}",fixerHandler::getCurrentRate)
             .build();
     }

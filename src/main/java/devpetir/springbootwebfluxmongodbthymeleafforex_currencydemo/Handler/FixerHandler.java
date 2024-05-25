@@ -28,10 +28,11 @@ public class FixerHandler {
     }
 
     public Mono<ServerResponse> getCurrentRate(ServerRequest request) {
-        // if startDate and endDate in hardCode
+        /* if startDate and endDate in hardCode */
         // String startDate = request.queryParam("start_date").orElse("2024-01-01"); // Default to a specific date if missing
         // String endDate = request.queryParam("end_date").orElse("2024-01-02");     // Default to a specific date if missing
-        // if startDate and endDate as parameter in url
+
+        /* if startDate and endDate as parameter in url */
         String startDate = request.pathVariable("startDate");
         String endDate = request.pathVariable("endDate");
         int page = Integer.parseInt(request.queryParam("page").orElse("1"));
@@ -39,9 +40,11 @@ public class FixerHandler {
 
         Mono<String> rateData = fixerService.getCurrentRate(startDate, endDate);
 
+        /*  reponse will display as json in browser */
         // return ServerResponse.ok()
         //         .contentType(MediaType.APPLICATION_JSON)
         //         .body(rateData,String.class);
+
         return rateData.flatMap(data -> {
             try {
                 JsonNode jsonNode = objectMapper.readTree(data);
@@ -54,9 +57,10 @@ public class FixerHandler {
                     rates.put(field.getKey(), field.getValue().asDouble());
                 }
 
+                /* Without pagination all rates will display */
                 //return ServerResponse.ok().render("rates", Map.of("rates", rates));
 
-                //Implement pagination
+                /* Implement pagination */
                 int totalItems = rates.size();
                 int totalPages = (int) Math.ceil((double) totalItems / size);
                 int fromIndex = (page - 1) * size;
